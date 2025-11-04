@@ -5,9 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Farcaster Quiz</title>
 
-  <!-- Metatags do Farcaster -->
+  <!-- 🧠 Metatags obrigatórias para o Farcaster reconhecer o frame -->
   <meta property="og:title" content="Farcaster Quiz" />
-  <meta property="og:description" content="Teste seus conhecimentos sobre cripto!" />
   <meta property="og:image" content="https://farcaster-quiz.vercel.app/quiz.png" />
   <meta property="fc:frame" content="vNext" />
   <meta property="fc:frame:image" content="https://farcaster-quiz.vercel.app/quiz.png" />
@@ -28,13 +27,50 @@
       font-family: sans-serif;
       text-align: center;
     }
-    h1 { font-size: 28px; margin-bottom: 10px; }
-    p { font-size: 18px; margin-bottom: 20px; }
+    button {
+      margin: 8px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      background-color: #5a3cff;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #7c5cff;
+    }
+    .message {
+      margin-top: 20px;
+      font-size: 18px;
+    }
   </style>
 </head>
 <body>
   <h1>Farcaster Quiz</h1>
   <p>Qual é o token nativo do Ethereum?</p>
-  <img src="https://farcaster-quiz.vercel.app/quiz.png" alt="Quiz" width="300" />
+  <div id="answers">
+    <button data-answer="BTC">BTC</button>
+    <button data-answer="ETH">ETH</button>
+    <button data-answer="SOL">SOL</button>
+  </div>
+  <div class="message" id="message"></div>
+
+  <script>
+    const buttons = document.querySelectorAll("button");
+    const message = document.getElementById("message");
+
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const answer = btn.dataset.answer;
+        if (answer === "ETH") {
+          message.textContent = "✅ Certo! Você acertou!";
+        } else {
+          message.textContent = "❌ Errado. A resposta certa é ETH.";
+        }
+      });
+    });
+  </script>
 </body>
 </html>
