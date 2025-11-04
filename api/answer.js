@@ -1,20 +1,20 @@
-export default function handler(req, res) {
-  const { buttonIndex } = req.body || {};
+export default async function handler(req, res) {
+  const { untrustedData } = req.body || {};
+  const userAnswer = untrustedData?.buttonIndex;
 
-  let text = "";
-  let image = "https://farcaster-quiz.vercel.app/quiz.png";
+  let message = "❌ Errado. A resposta certa é ETH.";
 
-  if (buttonIndex === 1) text = "❌ Errado! BTC é do Bitcoin.";
-  if (buttonIndex === 2) text = "✅ Certo! ETH é o token nativo do Ethereum.";
-  if (buttonIndex === 3) text = "❌ Errado! SOL é da Solana.";
+  if (userAnswer === 2) {
+    message = "✅ Certo! Você acertou!";
+  }
 
-  return res.status(200).json({
-    "frame": {
-      "version": "vNext",
-      "image": image,
-      "post_url": "https://farcaster-quiz.vercel.app/api/answer",
-      "buttons": [{ "label": "Tentar de novo" }],
-      "text": text
-    }
+  res.status(200).json({
+    frame: {
+      version: "vNext",
+      image: "https://farcaster-quiz.vercel.app/quiz.png",
+      post_url: "https://farcaster-quiz.vercel.app/api/answer",
+      buttons: [{ label: "Tentar novamente" }],
+      state: { message }
+    },
   });
 }
